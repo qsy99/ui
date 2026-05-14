@@ -1,0 +1,617 @@
+
+<!DOCTYPE html><html lang="zh-CN" style="--leg-height: 102.5px; --torso-width: 54px;"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><link rel="stylesheet" type="text/css" href="cid:css-eb04ba52-5f1a-4fc2-b6c2-59bab91eeb62@mhtml.blink" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>三福 SANFU - 复古潮流数字穿搭空间</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com/">
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  
+</head>
+<body>
+  <div class="phone-frame">
+    <div class="screen">
+      <!-- 状态栏 -->
+      <div class="status-bar">
+        <span class="time" id="currentTime">21:50</span>
+        <div class="icons">
+          <div class="status-icon">📶</div>
+          <div class="status-icon">📡</div>
+          <div class="status-icon">🔋</div>
+        </div>
+      </div>
+
+      <!-- 主内容区 -->
+      <div class="main-content">
+        
+        <!-- ========== 页面一：搭案空间 ========== -->
+        <div class="page active" id="page-home">
+          <div class="window-tabs">
+            <div class="window-tab">筛选搭</div>
+            <div class="window-tab active">搭案库</div>
+          </div>
+
+          <!-- Tab: 筛选搭 -->
+          <div id="tab-filter" class="tab-content">
+            <!-- 筛选条件 -->
+            <div class="filter-section">
+              <div class="filter-header">
+                <div class="folder-icon"></div>
+                <span class="filter-title">穿搭筛选条件</span>
+              </div>
+              <div class="filter-grid">
+                <div class="filter-group">
+                  <span class="filter-label">场景</span>
+                  <div class="filter-options">
+                    <span class="filter-chip" data-filter="scene" data-value="commute">通勤</span>
+                    <span class="filter-chip selected" data-filter="scene" data-value="date">约会</span>
+                    <span class="filter-chip" data-filter="scene" data-value="citywalk">citywalk</span>
+                  </div>
+                </div>
+                <div class="filter-group">
+                  <span class="filter-label">风格</span>
+                  <div class="filter-options">
+                    <span class="filter-chip" data-filter="style" data-value="y2k">Y2K</span>
+                    <span class="filter-chip selected" data-filter="style" data-value="hotgirl">千禧辣妹</span>
+                    <span class="filter-chip" data-filter="style" data-value="cleanfit">clean fit</span>
+                  </div>
+                </div>
+                <div class="filter-group">
+                  <span class="filter-label">天气</span>
+                  <div class="filter-options">
+                    <span class="filter-chip selected" data-filter="weather" data-value="sunny">☀️</span>
+                    <span class="filter-chip" data-filter="weather" data-value="cloudy">☁️</span>
+                    <span class="filter-chip" data-filter="weather" data-value="rainy">🌧️</span>
+                  </div>
+                </div>
+                <div class="filter-group">
+                  <span class="filter-label">温度</span>
+                  <div class="filter-options">
+                    <span class="filter-chip" data-filter="temp" data-value="15">15℃</span>
+                    <span class="filter-chip selected" data-filter="temp" data-value="20">20℃</span>
+                    <span class="filter-chip" data-filter="temp" data-value="25">25℃</span>
+                  </div>
+                </div>
+                <div class="filter-group">
+                  <span class="filter-label">心情</span>
+                  <div class="filter-options">
+                    <span class="filter-chip selected" data-filter="mood" data-value="happy">✨</span>
+                    <span class="filter-chip" data-filter="mood" data-value="lazy">😌</span>
+                    <span class="filter-chip" data-filter="mood" data-value="cool">🕶️</span>
+                  </div>
+                </div>
+                <div class="filter-group">
+                  <span class="filter-label">宠物搭</span>
+                  <div class="filter-options">
+                    <span class="filter-chip" data-filter="pet" data-value="cat">🐱</span>
+                    <span class="filter-chip selected" data-filter="pet" data-value="dog">🐶</span>
+                    <span class="filter-chip" data-filter="pet" data-value="hamster">🐹</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 木制人形衣架展示 - 可滑动切换 -->
+            <div class="mannequin-showcase">
+              <div class="showcase-header">
+                <span class="showcase-title">AI 穿搭展示</span>
+                <span class="showcase-status" id="outfitStatus">🎨 已生成 24 套方案</span>
+              </div>
+              
+              <div class="mannequin-stage">
+                <div class="stage-light"></div>
+                <div class="slide-hint slide-hint-left">◀</div>
+                <div class="wooden-mannequin-figure">
+                  <div class="mannequin-base"></div>
+                  <div class="mannequin-pole"></div>
+                  <div class="mannequin-shoulder"></div>
+                  <div class="mannequin-head"></div>
+                  <div class="clothing-container" style="opacity: 1; transform: translateX(-50%) scale(1); transition: all 0.4s var(--ease-retro);">
+                    <div class="clothing-top" id="mannequinTop" style="background: linear-gradient(135deg, rgb(92, 225, 230) 0%, rgb(36, 94, 219) 100%);"></div>
+                    <div class="clothing-bottom" id="mannequinBottom" style="background: linear-gradient(135deg, rgb(139, 111, 71) 0%, rgb(107, 84, 55) 100%);"></div>
+                    <div class="clothing-shoes">
+                      <div class="shoe" id="mannequinShoeLeft" style="background: linear-gradient(135deg, rgb(36, 94, 219) 0%, rgb(26, 66, 160) 100%);"></div>
+                      <div class="shoe" id="mannequinShoeRight" style="background: linear-gradient(135deg, rgb(36, 94, 219) 0%, rgb(26, 66, 160) 100%);"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="slide-hint slide-hint-right">▶</div>
+              </div>
+
+              <div class="outfit-info-card">
+                <div class="outfit-name" id="outfitName">Clean Fit 通勤</div>
+                <div class="outfit-tags" id="outfitTags"><span class="outfit-tag">#CleanFit</span><span class="outfit-tag">#通勤</span><span class="outfit-tag">#简约</span><span class="outfit-tag">#气质</span></div>
+                <div class="outfit-actions">
+                  <button class="action-btn action-btn-secondary">👁️ 详情</button>
+                  <button class="action-btn action-btn-secondary">💾 收藏</button>
+                  <button class="action-btn action-btn-primary">✨ 换一套</button>
+                </div>
+              </div>
+
+              <button class="generate-btn">
+                <span>🎨</span> 根据筛选条件生成穿搭
+              </button>
+            </div>
+          </div>
+
+          <!-- Tab: 搭案库 - 虚拟形象衣柜 -->
+          <div id="tab-wardrobe" class="tab-content active">
+            <div class="wardrobe-container">
+              <!-- 虚拟形象展示区 -->
+              <div class="avatar-showcase">
+                <!-- 虚拟形象 -->
+                <div class="virtual-avatar">
+                  <div class="avatar-body">
+                    <div class="avatar-head"></div>
+                    <div class="avatar-torso" id="avatarTorso"></div>
+                    <div class="avatar-legs">
+                      <div class="avatar-leg" id="avatarLegLeft"></div>
+                      <div class="avatar-leg" id="avatarLegRight"></div>
+                    </div>
+                    <!-- 服装层 -->
+                    <div class="avatar-clothing">
+                      <div class="avatar-top" id="avatarTop" style="background: linear-gradient(135deg, #ff6b9d 0%, #c44569 100%);"></div>
+                      <div class="avatar-bottom" id="avatarBottom" style="background: linear-gradient(135deg, #5c6bc0 0%, #3949ab 100%);"></div>
+                      <div class="avatar-shoes">
+                        <div class="avatar-shoe" id="avatarShoeLeft" style="background: linear-gradient(135deg, #ff8a65 0%, #ff5722 100%);"></div>
+                        <div class="avatar-shoe" id="avatarShoeRight" style="background: linear-gradient(135deg, #ff8a65 0%, #ff5722 100%);"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 环绕选项 -->
+                <div class="wardrobe-options">
+                  <div class="option-category">
+                    <div class="option-icon">👕</div>
+                    <div class="option-name">上装</div>
+                    <div class="option-count" id="countTop">12 件</div>
+                  </div>
+                  <div class="option-category">
+                    <div class="option-icon">👖</div>
+                    <div class="option-name">下装</div>
+                    <div class="option-count" id="countBottom">8 件</div>
+                  </div>
+                  <div class="option-category">
+                    <div class="option-icon">👗</div>
+                    <div class="option-name">套装</div>
+                    <div class="option-count" id="countSet">5 套</div>
+                  </div>
+                  <div class="option-category">
+                    <div class="option-icon">👟</div>
+                    <div class="option-name">鞋袜</div>
+                    <div class="option-count" id="countShoes">10 双</div>
+                  </div>
+                  <div class="option-category">
+                    <div class="option-icon">💍</div>
+                    <div class="option-name">饰品</div>
+                    <div class="option-count" id="countAccessory">15 件</div>
+                  </div>
+                  <div class="option-category active">
+                    <div class="option-icon">💄</div>
+                    <div class="option-name">妆容</div>
+                    <div class="option-count" id="countMakeup">6 款</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 服装选择面板 -->
+              <div class="clothing-panel">
+                <div class="panel-header">
+                  <div class="panel-title" id="panelTitle">💄 妆容</div>
+                  <div class="panel-filters" id="panelFilters">
+                    <span class="filter-tag active">全部</span>
+                    <span class="filter-tag">风格</span>
+                    <span class="filter-tag">颜色</span>
+                    <span class="filter-tag">季节</span>
+                  </div>
+                </div>
+                <div class="clothing-grid" id="clothingGrid"><div class="clothing-card selected"><div class="clothing-preview">👕</div><div class="clothing-name">短款 T 恤</div></div><div class="clothing-card"><div class="clothing-preview">👚</div><div class="clothing-name">吊带背心</div></div><div class="clothing-card"><div class="clothing-preview">🧥</div><div class="clothing-name">卫衣</div></div><div class="clothing-card"><div class="clothing-preview">👔</div><div class="clothing-name">衬衫</div></div><div class="clothing-card"><div class="clothing-preview">🧶</div><div class="clothing-name">针织衫</div></div><div class="clothing-card"><div class="clothing-preview">👕</div><div class="clothing-name">长袖 T 恤</div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ========== 页面二：搭搭桌面（社区） ========== -->
+        <div class="page" id="page-community">
+          <div class="community-page">
+            <!-- 频道栏 -->
+            <div class="channel-bar">
+              <div class="channel-scroll">
+                <div class="channel-item active">穿搭</div>
+                <div class="channel-item">护肤</div>
+                <div class="channel-item">家居</div>
+                <div class="channel-item">潮玩</div>
+                <div class="channel-item">彩妆</div>
+                <div class="channel-item">宠物</div>
+              </div>
+            </div>
+
+            <!-- 搜索栏区域 -->
+            <div class="community-search-area">
+              <div class="search-header">
+                <div class="search-input-wrapper">
+                  <span class="search-icon">🔍</span>
+                  <input type="text" class="search-input" placeholder="搜索穿搭、护肤、潮玩..." id="communitySearchInput">
+                </div>
+                <div class="search-actions">
+                  <div class="search-action-btn" title="拍照识图">📷</div>
+                  <div class="search-action-btn" title="扫码">🔲</div>
+                </div>
+              </div>
+
+              <!-- 搜索下拉面板 -->
+              <div class="search-dropdown" id="searchDropdown" style="display: none;">
+                <!-- 历史记录 -->
+                <div class="dropdown-section">
+                  <div class="dropdown-title">🕐 历史记录</div>
+                  <div class="search-history">
+                    <span class="history-tag">Y2K 穿搭</span>
+                    <span class="history-tag">千禧辣妹</span>
+                    <span class="history-tag">Clean Fit</span>
+                    <span class="history-tag">宠物搭</span>
+                  </div>
+                </div>
+
+                <!-- 猜你想搜 -->
+                <div class="dropdown-section">
+                  <div class="dropdown-title">💡 猜你想搜</div>
+                  <div class="guess-search">
+                    <span class="guess-tag">夏日穿搭</span>
+                    <span class="guess-tag">约会妆容</span>
+                    <span class="guess-tag">三福新品</span>
+                    <span class="guess-tag">学生党</span>
+                    <span class="guess-tag">显瘦</span>
+                  </div>
+                </div>
+
+                <!-- 三福心动榜 -->
+                <div class="dropdown-section">
+                  <div class="dropdown-title">💓 三福心动榜</div>
+                  <div class="ranking-list">
+                    <div class="ranking-item">
+                      <div class="ranking-num">1</div>
+                      <div class="ranking-text">Y2K 辣妹短上衣</div>
+                      <div class="ranking-hot">🔥 12.8w</div>
+                    </div>
+                    <div class="ranking-item">
+                      <div class="ranking-num">2</div>
+                      <div class="ranking-text">工装降落伞裤</div>
+                      <div class="ranking-hot">🔥 10.2w</div>
+                    </div>
+                    <div class="ranking-item">
+                      <div class="ranking-num">3</div>
+                      <div class="ranking-text">厚底玛丽珍鞋</div>
+                      <div class="ranking-hot">🔥 8.5w</div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 三福活动榜 -->
+                <div class="dropdown-section">
+                  <div class="dropdown-title">🎪 三福活动榜</div>
+                  <div class="ranking-list">
+                    <div class="ranking-item">
+                      <div class="ranking-num">1</div>
+                      <div class="ranking-text">Y2K 穿搭大赛</div>
+                      <div class="ranking-hot">📅 进行中</div>
+                    </div>
+                    <div class="ranking-item">
+                      <div class="ranking-num">2</div>
+                      <div class="ranking-text">AI 穿搭体验日</div>
+                      <div class="ranking-hot">📅 5.15 开始</div>
+                    </div>
+                    <div class="ranking-item">
+                      <div class="ranking-num">3</div>
+                      <div class="ranking-text">夏日音乐节快闪</div>
+                      <div class="ranking-hot">📅 6.1 开始</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 创作按钮 -->
+            <div class="create-btn">+</div>
+            
+            <!-- 创作菜单 -->
+            <div class="create-menu" id="createMenu">
+              <div class="create-menu-item">
+                <div class="create-menu-icon">🖼️</div>
+                <div class="create-menu-text">从相册选择</div>
+              </div>
+              <div class="create-menu-item">
+                <div class="create-menu-icon">📷</div>
+                <div class="create-menu-text">拍摄照片</div>
+              </div>
+              <div class="create-menu-item">
+                <div class="create-menu-icon">✏️</div>
+                <div class="create-menu-text">写文字</div>
+              </div>
+            </div>
+
+            <!-- 帖子信息流 -->
+            <div class="posts-feed">
+              <div class="post-card">
+                <div class="post-header">
+                  <div class="post-avatar">👧</div>
+                  <div><div class="post-author">小甜心 Y2K</div><div class="post-time">2 小时前</div></div>
+                </div>
+                <div class="post-content">
+                  <div class="post-text">今天在三福搭了一套超绝的千禧辣妹风！AI 推荐的搭配真的太懂我了～ 🎀✨</div>
+                  <div class="post-image-grid">
+                    <div class="post-image">👗</div><div class="post-image">👠</div><div class="post-image">💄</div><div class="post-image">📸</div>
+                  </div>
+                </div>
+                <div class="post-actions">
+                  <div class="post-action">❤️ <span>128</span></div>
+                  <div class="post-action">💬 24</div>
+                  <div class="post-action">⭐ 收藏</div>
+                </div>
+              </div>
+              <div class="post-card">
+                <div class="post-header">
+                  <div class="post-avatar">🐱</div>
+                  <div><div class="post-author">猫系少女</div><div class="post-time">5 小时前</div></div>
+                </div>
+                <div class="post-content">
+                  <div class="post-text">带猫咪来门店打卡！店员说我的穿搭和店里的陈列超配～ 🐾</div>
+                  <div class="post-image-grid">
+                    <div class="post-image">🐱</div><div class="post-image">🏪</div>
+                  </div>
+                </div>
+                <div class="post-actions">
+                  <div class="post-action">❤️ <span>256</span></div>
+                  <div class="post-action">💬 48</div>
+                  <div class="post-action">⭐ 收藏</div>
+                </div>
+              </div>
+              <div class="post-card">
+                <div class="post-header">
+                  <div class="post-avatar">🧴</div>
+                  <div><div class="post-author">护肤达人</div><div class="post-time">昨天</div></div>
+                </div>
+                <div class="post-content">
+                  <div class="post-text">三福新出的彩妆系列真的绝了！这个口红颜色太显白了～ 💄</div>
+                  <div class="post-image-grid">
+                    <div class="post-image">💄</div><div class="post-image">💋</div>
+                  </div>
+                </div>
+                <div class="post-actions">
+                  <div class="post-action">❤️ <span>89</span></div>
+                  <div class="post-action">💬 12</div>
+                  <div class="post-action">⭐ 收藏</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ========== 页面三：会员码 ========== -->
+        <div class="page" id="page-member">
+          <div class="member-page">
+            <div class="member-card">
+              <div class="member-header">
+                <div class="level-badge">✨ 钻石会员</div>
+                <div class="member-points">
+                  <div class="points-label">我的积分</div>
+                  <div class="points-value">2,888</div>
+                </div>
+              </div>
+              <div class="qr-section">
+                <div class="qr-code">📱</div>
+                <div class="qr-hint">向店员出示此码享受会员福利</div>
+              </div>
+              <div class="member-benefits">
+                <div class="benefits-title">🎁 今日福利</div>
+                <div class="benefits-grid">
+                  <div class="benefit-item"><div class="benefit-icon">🎂</div><div class="benefit-text">生日双倍积分</div></div>
+                  <div class="benefit-item"><div class="benefit-icon">🛍️</div><div class="benefit-text">新品 9 折</div></div>
+                  <div class="benefit-item"><div class="benefit-icon">☕</div><div class="benefit-text">免费饮品券</div></div>
+                  <div class="benefit-item"><div class="benefit-icon">🎫</div><div class="benefit-text">活动优先</div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ========== 页面四：逛福窗口 ========== -->
+        <div class="page" id="page-store">
+          <div class="store-header">
+            <div class="search-bar">
+              <input type="text" class="search-input" placeholder="搜索门店/活动...">
+              <button class="search-btn">🔍</button>
+            </div>
+            <div class="store-tabs">
+              <div class="store-tab">附近</div>
+              <div class="store-tab active">活动</div>
+            </div>
+          </div>
+
+          <!-- 附近门店 - 增加电话号码 -->
+          <div id="store-nearby" class="stores-list" style="display: none;">
+            <div class="store-card">
+              <div class="store-image">🏪<span class="store-badge">🔥 热门</span></div>
+              <div class="store-info">
+                <div class="store-name">三福·广州天河城店</div>
+                <div class="store-address">📍 天河区天河路 385 号天河城 B1 层</div>
+                <div class="store-phone">📞 020-3888 9999</div>
+                <div class="store-meta">
+                  <div class="store-hours">🕐 10:00-22:00</div>
+                  <div class="store-action">到这去 →</div>
+                </div>
+              </div>
+            </div>
+            <div class="store-card">
+              <div class="store-image">🏬<span class="store-badge">✨ 新品</span></div>
+              <div class="store-info">
+                <div class="store-name">三福·北京西单大悦城店</div>
+                <div class="store-address">📍 西城区西单北大街 131 号</div>
+                <div class="store-phone">📞 010-6655 8888</div>
+                <div class="store-meta">
+                  <div class="store-hours">🕐 10:00-22:00</div>
+                  <div class="store-action">到这去 →</div>
+                </div>
+              </div>
+            </div>
+            <div class="store-card">
+              <div class="store-image">🏪<span class="store-badge">🎉 活动</span></div>
+              <div class="store-info">
+                <div class="store-name">三福·上海来福士店</div>
+                <div class="store-address">📍 黄浦区西藏中路 268 号</div>
+                <div class="store-phone">📞 021-5566 7777</div>
+                <div class="store-meta">
+                  <div class="store-hours">🕐 10:00-22:00</div>
+                  <div class="store-action">到这去 →</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 活动列表 -->
+          <div id="store-events" class="stores-list" style="display: grid;">
+            <div class="event-card">
+              <div class="event-image">🎪<span class="event-badge">🔥 正在进行</span></div>
+              <div class="event-info">
+                <div class="event-name">Y2K 千禧辣妹穿搭大赛</div>
+                <div class="event-date">📅 2026.05.01 - 2026.05.31</div>
+                <div class="event-desc">穿着 Y2K 风格到店打卡，拍照发布小红书@三福官方，即可参与评选赢大奖！</div>
+                <div class="event-actions">
+                  <button class="event-btn event-btn-primary">立即报名</button>
+                  <button class="event-btn event-btn-secondary">查看详情</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="event-card">
+              <div class="event-image" style="background: linear-gradient(135deg, var(--cyber-cyan) 0%, var(--xp-blue) 100%);">🎨<span class="event-badge" style="background: linear-gradient(180deg, var(--fluorescent-green) 0%, #9acd32 100%);">即将开始</span></div>
+              <div class="event-info">
+                <div class="event-name">AI 穿搭体验日</div>
+                <div class="event-date">📅 2026.05.15 - 2026.05.17</div>
+                <div class="event-desc">到店体验最新 AI 穿搭系统，生成专属虚拟形象，享受会员专属折扣！</div>
+                <div class="event-actions">
+                  <button class="event-btn event-btn-primary">预约体验</button>
+                  <button class="event-btn event-btn-secondary">查看详情</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="event-card">
+              <div class="event-image" style="background: linear-gradient(135deg, var(--neon-orange) 0%, #ff6b6b 100%);">🎵<span class="event-badge">即将开始</span></div>
+              <div class="event-info">
+                <div class="event-name">夏日音乐节联名快闪</div>
+                <div class="event-date">📅 2026.06.01 - 2026.06.03</div>
+                <div class="event-desc">三福 × 音乐节联名系列首发，限定周边、现场 DJ、穿搭拍照区等你来玩！</div>
+                <div class="event-actions">
+                  <button class="event-btn event-btn-primary">提醒我</button>
+                  <button class="event-btn event-btn-secondary">查看详情</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ========== 页面五：我的福盒 ========== -->
+        <div class="page" id="page-profile">
+          <div class="profile-header">
+            <div class="profile-avatar">👤</div>
+            <div class="profile-name">潮流探索者</div>
+            <div class="profile-mood">✨ 今天也是元气满满的一天～</div>
+            <div class="profile-stats">
+              <div class="stat-item"><div class="stat-value">24</div><div class="stat-label">搭案</div></div>
+              <div class="stat-item"><div class="stat-value">128</div><div class="stat-label">收藏</div></div>
+              <div class="stat-item"><div class="stat-value">56</div><div class="stat-label">足迹</div></div>
+            </div>
+          </div>
+
+          <div class="profile-content">
+            <div class="profile-section">🎨 创作与管理</div>
+            <div class="menu-section">
+              <div class="menu-item"><div class="menu-icon">🎨</div><div class="menu-text">创作者中心</div><div class="menu-badge">新</div><div class="menu-arrow">›</div></div>
+              <div class="menu-item"><div class="menu-icon">📝</div><div class="menu-text">我的帖子</div><div class="menu-arrow">›</div></div>
+              <div class="menu-item"><div class="menu-icon">⭐</div><div class="menu-text">我的收藏</div><div class="menu-arrow">›</div></div>
+            </div>
+
+            <div class="profile-section">👤 个人设置</div>
+            <div class="menu-section">
+              <div class="menu-item"><div class="menu-icon">👤</div><div class="menu-text">个人信息</div><div class="menu-arrow">›</div></div>
+              <div class="menu-item"><div class="menu-icon">🎭</div><div class="menu-text">虚拟形象</div><div class="menu-arrow">›</div></div>
+              <div class="menu-item"><div class="menu-icon">🎨</div><div class="menu-text">风格档案</div><div class="menu-arrow">›</div></div>
+            </div>
+
+            <div class="profile-section">🛍️ 购物与足迹</div>
+            <div class="menu-section">
+              <div class="menu-item"><div class="menu-icon">🗺️</div><div class="menu-text">我的足迹</div><div class="menu-arrow">›</div></div>
+              <div class="menu-item"><div class="menu-icon">📦</div><div class="menu-text">我的订单</div><div class="menu-arrow">›</div></div>
+              <div class="menu-item"><div class="menu-icon">💳</div><div class="menu-text">会员中心</div><div class="menu-badge">钻石</div><div class="menu-arrow">›</div></div>
+            </div>
+
+            <div class="profile-section">⚙️ 设置与帮助</div>
+            <div class="menu-section">
+              <div class="menu-item"><div class="menu-icon">🔔</div><div class="menu-text">消息通知</div><div class="menu-arrow">›</div></div>
+              <div class="menu-item"><div class="menu-icon">⚙️</div><div class="menu-text">设置</div><div class="menu-arrow">›</div></div>
+              <div class="menu-item"><div class="menu-icon">💬</div><div class="menu-text">客服帮助</div><div class="menu-arrow">›</div></div>
+              <div class="menu-item"><div class="menu-icon">ℹ️</div><div class="menu-text">关于三福</div><div class="menu-arrow">›</div></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- AI 悬浮窗 -->
+      <div class="ai-float-window glow-animation" id="aiFloatWindow" style="display: none;">
+        <div class="float-window-header">
+          <div class="float-window-title"><span>🤖</span><span>AI 穿搭助手</span></div>
+          <div class="float-window-controls">
+            <div class="window-control">−</div>
+            <div class="window-control close">×</div>
+          </div>
+        </div>
+        <div class="float-window-content" id="chatContent">
+          <div class="chat-message">
+            <div class="chat-avatar">🤖</div>
+            <div class="chat-bubble"><span id="typingText">双击服装单品可以替换～</span><span class="typing-cursor"></span></div>
+          </div>
+        </div>
+        <div class="chat-input-area">
+          <input type="text" class="chat-input" placeholder="输入你的需求..." id="chatInput">
+          <button class="chat-send">发送</button>
+        </div>
+      </div>
+
+      <!-- 底部导航栏 -->
+      <div class="taskbar">
+        <div class="taskbar-item active" data-page="page-home"><div class="taskbar-icon">🎨</div><span class="taskbar-label">搭案空间</span></div>
+        <div class="taskbar-item" data-page="page-community"><div class="taskbar-icon">🌐</div><span class="taskbar-label">搭搭桌面</span></div>
+        <div class="taskbar-item" data-page="page-member"><div class="taskbar-icon">💳</div><span class="taskbar-label">会员码</span></div>
+        <div class="taskbar-item" data-page="page-store"><div class="taskbar-icon">🛍️</div><span class="taskbar-label">逛福窗口</span></div>
+        <div class="taskbar-item" data-page="page-profile"><div class="taskbar-icon">🎁</div><span class="taskbar-label">我的福盒</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 编辑资料模态框 -->
+  <div class="modal-overlay" id="editProfileModal">
+    <div class="modal-window">
+      <div class="modal-header">
+        <div class="modal-title">✏️ 编辑身材数据</div>
+        <div class="modal-close">×</div>
+      </div>
+      <div class="modal-body">
+        <div style="display: flex; gap: var(--space-md);">
+          <div class="form-group" style="flex: 1;"><label class="form-label">身高 (cm)</label><input type="number" class="form-input" id="editHeight" value="165"></div>
+          <div class="form-group" style="flex: 1;"><label class="form-label">体重 (kg)</label><input type="number" class="form-input" id="editWeight" value="48"></div>
+        </div>
+        <div class="form-group"><label class="form-label">鞋码</label><input type="text" class="form-input" id="editShoeSize" value="37"></div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary">取消</button>
+        <button class="btn btn-primary">保存</button>
+      </div>
+    </div>
+  </div>
+
+  
+
+
+</body></html>
