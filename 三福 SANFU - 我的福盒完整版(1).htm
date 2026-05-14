@@ -1,0 +1,1666 @@
+<!DOCTYPE html>
+<!-- saved from url=(0072)file:///C:/Users/16965/.easyclaw/workspace/sanfu-app-mybox-complete.html -->
+<html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>三福 SANFU - 我的福盒完整版</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com/">
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+  <link href="./三福 SANFU - 我的福盒完整版_files/css2" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #e8eef3; --bg-secondary: #d4dbe3; --bg-tertiary: #c0c8d0;
+      --window-bg: #f0f5f9; --xp-blue: #245edb; --xp-blue-light: #4a7ef0; --xp-blue-dark: #1a42a0;
+      --silver: #c0c5ce; --silver-light: #d8dde4; --silver-dark: #9aa3ad;
+      --millennium-pink: #d4a5d4; --millennium-purple: #9b8fc4; --fluorescent-green: #b8f55c;
+      --cyber-cyan: #5ce1e6; --neon-orange: #ff8c42; --warm-peach: #ffd9c4;
+      --text-primary: #1a2330; --text-secondary: #4a5568; --text-muted: #7a8599; --text-inverse: #ffffff;
+      --glow-blue: rgba(92, 225, 230, 0.6); --glow-pink: rgba(212, 165, 212, 0.5);
+      --glow-green: rgba(184, 245, 92, 0.5); --glow-purple: rgba(155, 143, 196, 0.5);
+      --border-medium: #c0c8d0; --border-dark: #9aa3ad; --shadow-window: 0 4px 16px rgba(26, 35, 48, 0.12);
+      --space-xs: 4px; --space-sm: 8px; --space-md: 16px; --space-lg: 24px; --space-xl: 32px;
+      --radius-sm: 4px; --radius-md: 8px; --radius-lg: 12px; --radius-xl: 16px; --radius-window: 6px;
+      --ease-retro: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Noto Sans SC', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: var(--space-lg);
+    }
+
+    .phone-frame {
+      width: 393px; height: 852px; background: #1a1a1a; border-radius: 55px; padding: 12px;
+      box-shadow: 0 0 0 2px #333, 0 25px 50px rgba(0,0,0,0.5); position: relative;
+    }
+    .phone-frame::before {
+      content: ''; position: absolute; top: 20px; left: 50%; transform: translateX(-50%);
+      width: 120px; height: 35px; background: #1a1a1a; border-radius: 0 0 20px 20px; z-index: 100;
+    }
+
+    .screen {
+      width: 100%; height: 100%; background: var(--bg-primary); border-radius: 45px;
+      overflow: hidden; position: relative; display: flex; flex-direction: column;
+    }
+
+    .status-bar {
+      height: 54px; background: linear-gradient(180deg, var(--xp-blue) 0%, var(--xp-blue-light) 100%);
+      display: flex; justify-content: space-between; align-items: center; padding: 0 var(--space-lg);
+      color: var(--text-inverse); font-size: 14px; font-weight: 500; flex-shrink: 0;
+      border-bottom: 2px solid rgba(255,255,255,0.2);
+    }
+    .status-bar .time { font-family: 'Space Grotesk', monospace; font-weight: 600; }
+    .status-bar .icons { display: flex; gap: 6px; align-items: center; }
+    .status-icon {
+      width: 18px; height: 18px; background: rgba(255,255,255,0.9); border-radius: 3px;
+      display: flex; align-items: center; justify-content: center; font-size: 10px; color: var(--xp-blue);
+    }
+
+    .main-content { flex: 1; overflow-y: auto; overflow-x: hidden; position: relative; }
+    .page { display: none; min-height: 100%; }
+    .page.active { display: block; animation: page-slide-in 0.35s var(--ease-retro) forwards; }
+    @keyframes page-slide-in { from { opacity: 0; transform: translateX(30px); } to { opacity: 1; transform: translateX(0); } }
+
+    /* 返回按钮 */
+    .back-btn {
+      position: absolute; top: var(--space-md); left: var(--space-md);
+      width: 36px; height: 36px;
+      background: linear-gradient(180deg, var(--xp-blue) 0%, var(--xp-blue-dark) 100%);
+      border: 2px outset var(--xp-blue-light);
+      border-radius: var(--radius-md);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; color: white; cursor: pointer;
+      z-index: 50; transition: all 0.15s var(--ease-retro);
+    }
+    .back-btn:hover { box-shadow: 0 0 10px var(--glow-blue); transform: scale(1.05); }
+
+    /* 页面标题栏 */
+    .page-header {
+      background: linear-gradient(180deg, var(--xp-blue) 0%, var(--xp-blue-dark) 100%);
+      padding: var(--space-lg) var(--space-md);
+      padding-top: 70px;
+      border-bottom: 2px solid rgba(255,255,255,0.2);
+    }
+    .page-title {
+      font-size: 18px; font-weight: 600; color: var(--text-inverse);
+      display: flex; align-items: center; gap: var(--space-sm);
+    }
+
+    /* 底部导航栏 */
+    .taskbar {
+      height: 83px; background: linear-gradient(180deg, var(--xp-blue) 0%, var(--xp-blue-dark) 100%);
+      display: flex; justify-content: space-around; align-items: center;
+      border-top: 2px solid rgba(255,255,255,0.2); flex-shrink: 0;
+    }
+    .taskbar-item {
+      display: flex; flex-direction: column; align-items: center; gap: 4px;
+      padding: var(--space-xs) var(--space-sm); cursor: pointer;
+      transition: all 0.2s var(--ease-retro); color: rgba(255,255,255,0.7);
+    }
+    .taskbar-item.active { color: var(--text-inverse); }
+    .taskbar-item:hover { color: var(--text-inverse); transform: translateY(-2px); }
+    .taskbar-icon { font-size: 22px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2)); }
+    .taskbar-label { font-size: 10px; font-weight: 500; }
+
+    /* ========== 我的福盒 - 一级页面 ========== */
+    .profile-header {
+      background: linear-gradient(180deg, var(--xp-blue) 0%, var(--xp-blue-dark) 100%);
+      padding: var(--space-lg); padding-top: 60px;
+      text-align: center; color: var(--text-inverse);
+    }
+    .profile-avatar {
+      width: 80px; height: 80px; margin: 0 auto var(--space-md);
+      background: linear-gradient(135deg, var(--millennium-pink) 0%, var(--millennium-purple) 100%);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 40px; box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+    .profile-name { font-size: 18px; font-weight: 600; margin-bottom: var(--space-xs); }
+    .profile-mood { font-size: 12px; opacity: 0.9; margin-bottom: var(--space-md); }
+    .profile-stats {
+      display: flex; justify-content: center; gap: var(--space-xl);
+    }
+    .stat-item { text-align: center; }
+    .stat-value { font-size: 20px; font-weight: 700; font-family: 'Space Grotesk', monospace; }
+    .stat-label { font-size: 11px; opacity: 0.8; }
+
+    .profile-content { padding: var(--space-md); }
+    .profile-section {
+      font-size: 13px; font-weight: 600; color: var(--text-muted);
+      margin: var(--space-lg) 0 var(--space-md);
+      display: flex; align-items: center; gap: var(--space-xs);
+      text-transform: uppercase; letter-spacing: 0.5px;
+    }
+    .menu-section {
+      background: var(--window-bg); border: 2px solid var(--border-medium);
+      border-radius: var(--radius-window); overflow: hidden;
+    }
+    .menu-item {
+      display: flex; align-items: center; gap: var(--space-md);
+      padding: var(--space-md); border-bottom: 1px dashed var(--border-medium);
+      cursor: pointer; transition: all 0.15s var(--ease-retro);
+    }
+    .menu-item:last-child { border-bottom: none; }
+    .menu-item:hover {
+      background: linear-gradient(90deg, rgba(92, 225, 230, 0.1) 0%, transparent 100%);
+    }
+    .menu-icon {
+      width: 36px; height: 36px;
+      background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+      border-radius: var(--radius-md);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; box-shadow: 2px 2px 0 var(--border-dark);
+    }
+    .menu-text { flex: 1; font-size: 13px; font-weight: 500; color: var(--text-primary); }
+    .menu-badge {
+      font-size: 10px; padding: var(--space-xs) var(--space-sm);
+      background: linear-gradient(180deg, var(--fluorescent-green) 0%, #9acd32 100%);
+      color: var(--text-primary); border-radius: var(--radius-sm);
+      font-weight: 600;
+    }
+    .menu-arrow { font-size: 18px; color: var(--text-muted); }
+
+    /* ========== 二级页面通用样式 ========== */
+    .sub-page {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      background: var(--bg-primary); z-index: 20; display: none;
+      flex-direction: column;
+    }
+    .sub-page.active { display: flex; animation: slide-in-right 0.3s var(--ease-retro); }
+    @keyframes slide-in-right { from { transform: translateX(100%); } to { transform: translateX(0); } }
+
+    .sub-page-content { flex: 1; overflow-y: auto; padding: var(--space-md); padding-top: 100px; }
+
+    /* ========== 1. 个人信息页面 ========== */
+    .profile-card {
+      background: var(--window-bg); border: 2px solid var(--border-medium);
+      border-radius: var(--radius-window); padding: var(--space-lg);
+      margin-bottom: var(--space-md);
+    }
+    .profile-edit-avatar {
+      display: flex; align-items: center; gap: var(--space-md);
+      padding-bottom: var(--space-md); border-bottom: 2px dashed var(--border-medium);
+      margin-bottom: var(--space-md);
+    }
+    .edit-avatar-large {
+      width: 80px; height: 80px;
+      background: linear-gradient(135deg, var(--millennium-pink) 0%, var(--millennium-purple) 100%);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 36px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      cursor: pointer; transition: all 0.2s;
+    }
+    .edit-avatar-large:hover { transform: scale(1.05); box-shadow: 0 0 15px var(--glow-pink); }
+    .edit-avatar-info { flex: 1; }
+    .edit-avatar-name { font-size: 16px; font-weight: 600; color: var(--text-primary); }
+    .edit-avatar-edit { font-size: 12px; color: var(--xp-blue); cursor: pointer; }
+
+    .form-group { margin-bottom: var(--space-md); }
+    .form-label {
+      display: block; font-size: 12px; font-weight: 500; color: var(--text-muted);
+      margin-bottom: var(--space-xs);
+    }
+    .form-input {
+      width: 100%; padding: var(--space-sm) var(--space-md);
+      border: 2px inset var(--border-medium); border-radius: var(--radius-md);
+      font-size: 13px; background: var(--bg-primary); font-family: inherit;
+      transition: all 0.2s;
+    }
+    .form-input:focus {
+      outline: none; border-color: var(--xp-blue-light);
+      box-shadow: 0 0 8px var(--glow-blue);
+    }
+
+    .tag-group { display: flex; flex-wrap: wrap; gap: var(--space-xs); }
+    .tag-chip {
+      padding: var(--space-xs) var(--space-sm);
+      background: var(--bg-primary); border: 1px solid var(--border-medium);
+      border-radius: var(--radius-sm); font-size: 11px; color: var(--text-secondary);
+      cursor: pointer; transition: all 0.15s;
+    }
+    .tag-chip.selected {
+      background: linear-gradient(180deg, var(--xp-blue) 0%, var(--xp-blue-dark) 100%);
+      color: var(--text-inverse); border-color: var(--xp-blue-dark);
+    }
+
+    .badge-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-sm); }
+    .badge-item {
+      aspect-ratio: 1; background: var(--bg-primary); border: 2px solid var(--border-medium);
+      border-radius: var(--radius-md); display: flex; flex-direction: column;
+      align-items: center; justify-content: center; cursor: pointer;
+      transition: all 0.2s;
+    }
+    .badge-item:hover { border-color: var(--xp-blue-light); box-shadow: 0 0 12px var(--glow-blue); }
+    .badge-item.earned {
+      background: linear-gradient(135deg, var(--millennium-pink) 0%, var(--millennium-purple) 100%);
+      border-color: var(--millennium-pink);
+    }
+    .badge-icon { font-size: 24px; margin-bottom: var(--space-xs); }
+    .badge-name { font-size: 9px; color: var(--text-muted); text-align: center; }
+
+    .level-card {
+      background: linear-gradient(180deg, var(--xp-blue) 0%, var(--xp-blue-dark) 100%);
+      border-radius: var(--radius-lg); padding: var(--space-md); color: var(--text-inverse);
+      margin-bottom: var(--space-md);
+    }
+    .level-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-sm); }
+    .level-name { font-size: 14px; font-weight: 600; }
+    .level-value { font-size: 16px; font-weight: 700; font-family: 'Space Grotesk', monospace; }
+    .level-bar {
+      height: 8px; background: rgba(255,255,255,0.2); border-radius: 4px; overflow: hidden;
+    }
+    .level-progress {
+      height: 100%; width: 65%;
+      background: linear-gradient(90deg, var(--fluorescent-green) 0%, var(--cyber-cyan) 100%);
+      border-radius: 4px;
+    }
+    .level-info { font-size: 11px; opacity: 0.9; margin-top: var(--space-xs); }
+
+    /* ========== 2. 虚拟形象页面 ========== */
+    .avatar-stage {
+      background: var(--window-bg); border: 2px solid var(--border-medium);
+      border-radius: var(--radius-window); padding: var(--space-lg);
+      margin-bottom: var(--space-md); text-align: center;
+    }
+    .avatar-display {
+      width: 200px; height: 280px; margin: 0 auto var(--space-md);
+      background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+      border-radius: var(--radius-xl); position: relative;
+      overflow: hidden;
+    }
+    .avatar-figure {
+      position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
+      width: 100px; height: 220px;
+    }
+    .avatar-figure-head {
+      position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+      width: 50px; height: 60px;
+      background: linear-gradient(180deg, var(--warm-peach) 0%, #e8b89c 100%);
+      border-radius: 50%;
+    }
+    .avatar-figure-body {
+      position: absolute; top: 65px; left: 50%; transform: translateX(-50%);
+      width: 70px; height: 80px;
+      background: linear-gradient(180deg, var(--warm-peach) 0%, #e8b89c 100%);
+      border-radius: 20px 20px 15px 15px;
+    }
+    .avatar-figure-legs {
+      position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+      display: flex; gap: 8px;
+    }
+    .avatar-figure-leg {
+      width: 20px; height: 70px;
+      background: linear-gradient(180deg, var(--warm-peach) 0%, #e8b89c 100%);
+      border-radius: 8px 8px 10px 10px;
+    }
+    .avatar-clothes-top {
+      position: absolute; top: 65px; left: 50%; transform: translateX(-50%);
+      width: 75px; height: 70px;
+      background: linear-gradient(135deg, #ff6b9d 0%, #c44569 100%);
+      border-radius: 20px 20px 15px 15px;
+    }
+    .avatar-clothes-bottom {
+      position: absolute; top: 130px; left: 50%; transform: translateX(-50%);
+      width: 70px; height: 60px;
+      background: linear-gradient(135deg, #5c6bc0 0%, #3949ab 100%);
+      border-radius: 10px 10px 15px 15px;
+    }
+    .avatar-clothes-shoes {
+      position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+      display: flex; gap: 8px;
+    }
+    .avatar-shoe {
+      width: 28px; height: 20px;
+      background: linear-gradient(135deg, #ff8a65 0%, #ff5722 100%);
+      border-radius: 6px 6px 4px 4px;
+    }
+
+    .avatar-actions { display: flex; gap: var(--space-sm); justify-content: center; }
+    .avatar-action-btn {
+      padding: var(--space-sm) var(--space-md);
+      background: linear-gradient(180deg, var(--xp-blue) 0%, var(--xp-blue-dark) 100%);
+      border: 2px outset var(--xp-blue-light); border-radius: var(--radius-md);
+      color: white; font-size: 12px; font-weight: 500; cursor: pointer;
+      transition: all 0.15s; display: flex; align-items: center; gap: var(--space-xs);
+    }
+    .avatar-action-btn:hover { box-shadow: 0 0 10px var(--glow-blue); transform: translateY(-1px); }
+
+    .wardrobe-tabs {
+      display: flex; gap: var(--space-xs); overflow-x: auto;
+      padding-bottom: var(--space-sm); margin-bottom: var(--space-md);
+    }
+    .wardrobe-tab {
+      flex-shrink: 0; padding: var(--space-xs) var(--space-md);
+      background: var(--bg-primary); border: 1px solid var(--border-medium);
+      border-radius: var(--radius-lg); font-size: 11px; color: var(--text-secondary);
+      cursor: pointer; transition: all 0.15s;
+    }
+    .wardrobe-tab.active {
+      background: linear-gradient(180deg, var(--xp-blue) 0%, var(--xp-blue-dark) 100%);
+      color: var(--text-inverse); border-color: var(--xp-blue-dark);
+    }
+
+    .wardrobe-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-sm);
+    }
+    .wardrobe-card {
+      background: var(--bg-primary); border: 2px solid var(--border-medium);
+      border-radius: var(--radius-md); padding: var(--space-sm);
+      cursor: pointer; transition: all 0.2s; text-align: center;
+    }
+    .wardrobe-card:hover { border-color: var(--xp-blue-light); box-shadow: 0 0 12px var(--glow-blue); }
+    .wardrobe-card.selected {
+      border-color: var(--xp-blue); background: rgba(36, 94, 219, 0.1);
+    }
+    .wardrobe-preview {
+      width: 100%; aspect-ratio: 1;
+      background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+      border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center;
+      font-size: 24px; margin-bottom: var(--space-xs);
+    }
+    .wardrobe-name { font-size: 9px; color: var(--text-primary); font-weight: 500; }
+
+    /* ========== 3. 我的帖子页面 ========== */
+    .creator-stats {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-sm);
+      margin-bottom: var(--space-md);
+    }
+    .creator-stat-card {
+      background: var(--window-bg); border: 2px solid var(--border-medium);
+      border-radius: var(--radius-md); padding: var(--space-md); text-align: center;
+    }
+    .creator-stat-value {
+      font-size: 20px; font-weight: 700; font-family: 'Space Grotesk', monospace;
+      color: var(--xp-blue);
+    }
+    .creator-stat-label { font-size: 10px; color: var(--text-muted); margin-top: var(--space-xs); }
+
+    .post-tabs {
+      display: flex; gap: var(--space-xs); margin-bottom: var(--space-md);
+      background: var(--window-bg); padding: var(--space-sm);
+      border: 2px solid var(--border-medium); border-radius: var(--radius-window);
+    }
+    .post-tab {
+      flex: 1; padding: var(--space-sm); text-align: center;
+      background: var(--bg-primary); border-radius: var(--radius-sm);
+      font-size: 12px; color: var(--text-secondary); cursor: pointer;
+      transition: all 0.15s;
+    }
+    .post-tab.active {
+      background: linear-gradient(180deg, var(--xp-blue) 0%, var(--xp-blue-dark) 100%);
+      color: var(--text-inverse);
+    }
+
+    .post-list-item {
+      background: var(--window-bg); border: 2px solid var(--border-medium);
+      border-radius: var(--radius-md); padding: var(--space-md);
+      margin-bottom: var(--space-sm); cursor: pointer;
+      transition: all 0.15s;
+    }
+    .post-list-item:hover { border-color: var(--xp-blue-light); box-shadow: 0 0 12px var(--glow-blue); }
+    .post-list-header { display: flex; gap: var(--space-sm); margin-bottom: var(--space-sm); }
+    .post-list-thumb {
+      width: 80px; height: 80px;
+      background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+      border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center;
+      font-size: 32px; flex-shrink: 0;
+    }
+    .post-list-info { flex: 1; }
+    .post-list-title { font-size: 13px; font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-xs); }
+    .post-list-meta { font-size: 10px; color: var(--text-muted); }
+    .post-list-stats {
+      display: flex; gap: var(--space-md); margin-top: var(--space-sm);
+    }
+    .post-stat { font-size: 10px; color: var(--text-muted); display: flex; align-items: center; gap: var(--space-xs); }
+
+    /* ========== 4. 我的收藏页面 ========== */
+    .collection-tabs {
+      display: flex; gap: var(--space-xs); overflow-x: auto;
+      margin-bottom: var(--space-md); padding-bottom: var(--space-sm);
+    }
+    .collection-tab {
+      flex-shrink: 0; padding: var(--space-xs) var(--space-md);
+      background: var(--bg-primary); border: 1px solid var(--border-medium);
+      border-radius: var(--radius-lg); font-size: 11px; color: var(--text-secondary);
+      cursor: pointer; transition: all 0.15s;
+    }
+    .collection-tab.active {
+      background: linear-gradient(180deg, var(--millennium-pink) 0%, var(--millennium-purple) 100%);
+      color: var(--text-inverse); border-color: var(--millennium-pink);
+    }
+
+    .collection-mood-tags {
+      display: flex; flex-wrap: wrap; gap: var(--space-xs);
+      margin-bottom: var(--space-md);
+    }
+    .mood-tag {
+      padding: var(--space-xs) var(--space-sm);
+      background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+      border: 1px solid var(--border-medium); border-radius: var(--radius-sm);
+      font-size: 10px; color: var(--text-secondary); cursor: pointer;
+      transition: all 0.15s;
+    }
+    .mood-tag:hover { border-color: var(--xp-blue-light); color: var(--xp-blue); }
+
+    .collection-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-sm);
+    }
+    .collection-card {
+      background: var(--window-bg); border: 2px solid var(--border-medium);
+      border-radius: var(--radius-md); overflow: hidden;
+      transition: all 0.2s; cursor: pointer;
+    }
+    .collection-card:hover { border-color: var(--xp-blue-light); box-shadow: 0 0 12px var(--glow-blue); }
+    .collection-image {
+      height: 120px;
+      background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 40px;
+    }
+    .collection-info { padding: var(--space-sm); }
+    .collection-name { font-size: 12px; font-weight: 600; color: var(--text-primary); }
+    .collection-date { font-size: 9px; color: var(--text-muted); margin-top: var(--space-xs); }
+
+    /* ========== 5. 我的足迹页面 ========== */
+    .足迹-header {
+      background: var(--window-bg); border: 2px solid var(--border-medium);
+      border-radius: var(--radius-window); padding: var(--space-md);
+      margin-bottom: var(--space-md);
+    }
+    .足迹-stats { display: flex; justify-content: space-around; }
+    .足迹-stat { text-align: center; }
+    .足迹-stat-value { font-size: 18px; font-weight: 700; color: var(--xp-blue); }
+    .足迹-stat-label { font-size: 10px; color: var(--text-muted); }
+
+    .timeline { position: relative; padding-left: var(--space-lg); }
+    .timeline::before {
+      content: ''; position: absolute; left: 8px; top: 0; bottom: 0;
+      width: 2px; background: linear-gradient(180deg, var(--xp-blue) 0%, var(--millennium-pink) 100%);
+    }
+    .timeline-item {
+      position: relative; padding-left: var(--space-md); margin-bottom: var(--space-lg);
+    }
+    .timeline-dot {
+      position: absolute; left: calc(-1 * var(--space-lg) + 4px); top: 0;
+      width: 10px; height: 10px;
+      background: var(--xp-blue); border-radius: 50%;
+      box-shadow: 0 0 0 3px var(--bg-primary);
+    }
+    .timeline-date { font-size: 11px; color: var(--text-muted); margin-bottom: var(--space-xs); }
+    .timeline-content {
+      background: var(--window-bg); border: 2px solid var(--border-medium);
+      border-radius: var(--radius-md); padding: var(--space-md);
+    }
+    .timeline-title { font-size: 13px; font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-xs); }
+    .timeline-desc { font-size: 11px; color: var(--text-secondary); }
+
+    /* ========== 6. 会员中心页面 ========== */
+    .member-vip-card {
+      background: linear-gradient(135deg, var(--xp-blue) 0%, var(--millennium-purple) 100%);
+      border-radius: var(--radius-xl); padding: var(--space-lg);
+      color: var(--text-inverse); margin-bottom: var(--space-md);
+      box-shadow: 0 8px 24px rgba(36, 94, 219, 0.3);
+    }
+    .member-vip-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-md); }
+    .member-vip-level { font-size: 20px; font-weight: 700; }
+    .member-vip-badge {
+      padding: var(--space-xs) var(--space-md);
+      background: rgba(255,255,255,0.2); border-radius: var(--radius-lg);
+      font-size: 12px; font-weight: 600;
+    }
+    .member-vip-points { text-align: center; margin-bottom: var(--space-md); }
+    .points-number { font-size: 32px; font-weight: 700; font-family: 'Space Grotesk', monospace; }
+    .points-label { font-size: 12px; opacity: 0.9; }
+    .member-vip-progress {
+      background: rgba(255,255,255,0.2); border-radius: var(--radius-md);
+      padding: var(--space-sm); margin-top: var(--space-md);
+    }
+    .progress-bar {
+      height: 10px; background: rgba(255,255,255,0.3); border-radius: 5px; overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%; width: 70%;
+      background: linear-gradient(90deg, var(--fluorescent-green) 0%, var(--cyber-cyan) 100%);
+      border-radius: 5px;
+    }
+    .progress-text { font-size: 11px; margin-top: var(--space-xs); opacity: 0.9; }
+
+    .benefits-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-sm);
+      margin-bottom: var(--space-md);
+    }
+    .benefit-card {
+      background: var(--window-bg); border: 2px solid var(--border-medium);
+      border-radius: var(--radius-md); padding: var(--space-md);
+      text-align: center; cursor: pointer; transition: all 0.15s;
+    }
+    .benefit-card:hover { border-color: var(--xp-blue-light); box-shadow: 0 0 12px var(--glow-blue); }
+    .benefit-icon { font-size: 28px; margin-bottom: var(--space-xs); }
+    .benefit-name { font-size: 11px; font-weight: 500; color: var(--text-primary); }
+
+    .daily-checkin {
+      background: linear-gradient(180deg, var(--fluorescent-green) 0%, #9acd32 100%);
+      border-radius: var(--radius-lg); padding: var(--space-md);
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: var(--space-md);
+    }
+    .checkin-info { color: var(--text-primary); }
+    .checkin-title { font-size: 14px; font-weight: 600; }
+    .checkin-desc { font-size: 11px; opacity: 0.9; }
+    .checkin-btn {
+      padding: var(--space-sm) var(--space-lg);
+      background: var(--text-inverse); color: var(--text-primary);
+      border: none; border-radius: var(--radius-md);
+      font-size: 12px; font-weight: 600; cursor: pointer;
+      transition: all 0.15s;
+    }
+    .checkin-btn:hover { transform: scale(1.05); box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+
+    /* ========== 7. 设置页面 (三级) ========== */
+    .settings-section {
+      margin-bottom: var(--space-lg);
+    }
+    .settings-title {
+      font-size: 13px; font-weight: 600; color: var(--text-muted);
+      margin-bottom: var(--space-md); text-transform: uppercase;
+    }
+
+    .toggle-item {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: var(--space-md);
+      background: var(--window-bg); border: 2px solid var(--border-medium);
+      border-radius: var(--radius-md); margin-bottom: var(--space-sm);
+    }
+    .toggle-info { flex: 1; }
+    .toggle-label { font-size: 13px; font-weight: 500; color: var(--text-primary); }
+    .toggle-desc { font-size: 10px; color: var(--text-muted); margin-top: var(--space-xs); }
+    .toggle-switch {
+      width: 44px; height: 24px; background: var(--bg-tertiary);
+      border-radius: 12px; position: relative; cursor: pointer;
+      transition: all 0.2s;
+    }
+    .toggle-switch.on { background: var(--xp-blue); }
+    .toggle-switch::after {
+      content: ''; position: absolute; top: 3px; left: 3px;
+      width: 18px; height: 18px; background: white;
+      border-radius: 50%; transition: all 0.2s;
+    }
+    .toggle-switch.on::after { left: 23px; }
+
+    /* ========== 8. 客服帮助页面 (三级) ========== */
+    .chat-container {
+      background: var(--window-bg); border: 2px solid var(--border-medium);
+      border-radius: var(--radius-window); overflow: hidden;
+    }
+    .chat-messages {
+      padding: var(--space-md); height: 300px; overflow-y: auto;
+    }
+    .chat-message {
+      display: flex; gap: var(--space-sm); margin-bottom: var(--space-md);
+    }
+    .chat-message.ai { flex-direction: row; }
+    .chat-message.user { flex-direction: row-reverse; }
+    .chat-avatar {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--xp-blue) 0%, var(--xp-blue-dark) 100%);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; flex-shrink: 0;
+    }
+    .chat-message.user .chat-avatar {
+      background: linear-gradient(135deg, var(--millennium-pink) 0%, var(--millennium-purple) 100%);
+    }
+    .chat-bubble {
+      max-width: 70%; padding: var(--space-sm) var(--space-md);
+      background: var(--bg-primary); border: 2px solid var(--border-medium);
+      border-radius: var(--radius-lg); font-size: 12px; color: var(--text-primary);
+    }
+    .chat-message.user .chat-bubble {
+      background: linear-gradient(180deg, var(--xp-blue) 0%, var(--xp-blue-dark) 100%);
+      color: var(--text-inverse); border-color: var(--xp-blue-dark);
+    }
+    .chat-input-area {
+      display: flex; gap: var(--space-sm); padding: var(--space-md);
+      border-top: 2px solid var(--border-medium);
+    }
+    .chat-input {
+      flex: 1; padding: var(--space-sm) var(--space-md);
+      border: 2px inset var(--border-medium); border-radius: var(--radius-lg);
+      font-size: 13px; background: var(--bg-primary);
+    }
+    .chat-send {
+      padding: var(--space-sm) var(--space-md);
+      background: linear-gradient(180deg, var(--xp-blue) 0%, var(--xp-blue-dark) 100%);
+      border: 2px outset var(--xp-blue-light); border-radius: var(--radius-md);
+      color: white; font-size: 12px; font-weight: 500; cursor: pointer;
+    }
+
+    .help-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-sm);
+      margin-top: var(--space-md);
+    }
+    .help-card {
+      background: var(--window-bg); border: 2px solid var(--border-medium);
+      border-radius: var(--radius-md); padding: var(--space-md);
+      text-align: center; cursor: pointer; transition: all 0.15s;
+    }
+    .help-card:hover { border-color: var(--xp-blue-light); box-shadow: 0 0 12px var(--glow-blue); }
+    .help-icon { font-size: 28px; margin-bottom: var(--space-xs); }
+    .help-name { font-size: 11px; font-weight: 500; color: var(--text-primary); }
+
+    /* ========== 9. 会员码页面 (四级) ========== */
+    .member-code-card {
+      background: linear-gradient(135deg, var(--xp-blue) 0%, var(--millennium-purple) 100%);
+      border-radius: var(--radius-xl); padding: var(--space-lg);
+      text-align: center; color: var(--text-inverse);
+      margin: var(--space-md);
+      box-shadow: 0 8px 24px rgba(36, 94, 219, 0.3);
+    }
+    .code-header { margin-bottom: var(--space-lg); }
+    .code-level { font-size: 18px; font-weight: 700; margin-bottom: var(--space-xs); }
+    .code-points { font-size: 24px; font-weight: 700; font-family: 'Space Grotesk', monospace; }
+    .qr-display {
+      width: 200px; height: 200px; margin: 0 auto var(--space-md);
+      background: var(--text-inverse); border-radius: var(--radius-lg);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 80px; position: relative; overflow: hidden;
+    }
+    .qr-display::before {
+      content: ''; position: absolute; inset: 0;
+      background: repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(36, 94, 219, 0.1) 21px);
+      animation: scan 2s linear infinite;
+    }
+    @keyframes scan { from { transform: translateX(-100%); } to { transform: translateX(100%); } }
+    .code-footer { font-size: 12px; opacity: 0.9; }
+
+    /* ========== 10. 创作者中心页面 (三级) ========== */
+    .creator-overview {
+      background: var(--window-bg); border: 2px solid var(--border-medium);
+      border-radius: var(--radius-window); padding: var(--space-md);
+      margin-bottom: var(--space-md);
+    }
+    .creator-header {
+      display: flex; align-items: center; gap: var(--space-md);
+      padding-bottom: var(--space-md); border-bottom: 2px dashed var(--border-medium);
+      margin-bottom: var(--space-md);
+    }
+    .creator-avatar {
+      width: 60px; height: 60px;
+      background: linear-gradient(135deg, var(--xp-blue) 0%, var(--xp-blue-dark) 100%);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 28px;
+    }
+    .creator-info { flex: 1; }
+    .creator-name { font-size: 16px; font-weight: 600; color: var(--text-primary); }
+    .creator-level { font-size: 11px; color: var(--text-muted); }
+
+    .data-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-sm);
+      margin-bottom: var(--space-md);
+    }
+    .data-card {
+      background: var(--bg-primary); border: 2px solid var(--border-medium);
+      border-radius: var(--radius-md); padding: var(--space-md); text-align: center;
+    }
+    .data-value { font-size: 24px; font-weight: 700; color: var(--xp-blue); font-family: 'Space Grotesk', monospace; }
+    .data-label { font-size: 10px; color: var(--text-muted); margin-top: var(--space-xs); }
+
+    .trend-chart {
+      background: var(--bg-primary); border: 2px solid var(--border-medium);
+      border-radius: var(--radius-md); padding: var(--space-md);
+      margin-bottom: var(--space-md);
+    }
+    .chart-title { font-size: 13px; font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-md); }
+    .chart-placeholder {
+      height: 120px;
+      background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+      border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center;
+      font-size: 32px;
+    }
+
+    .tool-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-sm);
+    }
+    .tool-card {
+      background: var(--window-bg); border: 2px solid var(--border-medium);
+      border-radius: var(--radius-md); padding: var(--space-md);
+      cursor: pointer; transition: all 0.15s;
+    }
+    .tool-card:hover { border-color: var(--xp-blue-light); box-shadow: 0 0 12px var(--glow-blue); }
+    .tool-icon { font-size: 24px; margin-bottom: var(--space-xs); }
+    .tool-name { font-size: 12px; font-weight: 500; color: var(--text-primary); }
+    .tool-desc { font-size: 10px; color: var(--text-muted); margin-top: var(--space-xs); }
+  </style>
+</head>
+<body>
+  <div class="phone-frame">
+    <div class="screen">
+      <!-- 状态栏 -->
+      <div class="status-bar">
+        <span class="time" id="currentTime">14:58</span>
+        <div class="icons">
+          <div class="status-icon">📶</div>
+          <div class="status-icon">📡</div>
+          <div class="status-icon">🔋</div>
+        </div>
+      </div>
+
+      <!-- 主内容区 -->
+      <div class="main-content">
+        <!-- 我的福盒 - 一级页面 -->
+        <div class="page active" id="page-profile">
+          <div class="profile-header">
+            <div class="profile-avatar">👤</div>
+            <div class="profile-name">潮流探索者</div>
+            <div class="profile-mood">✨ 今天也是元气满满的一天～</div>
+            <div class="profile-stats">
+              <div class="stat-item"><div class="stat-value">24</div><div class="stat-label">搭案</div></div>
+              <div class="stat-item"><div class="stat-value">128</div><div class="stat-label">收藏</div></div>
+              <div class="stat-item"><div class="stat-value">56</div><div class="stat-label">足迹</div></div>
+            </div>
+          </div>
+
+          <div class="profile-content">
+            <div class="profile-section">🎨 创作与管理</div>
+            <div class="menu-section">
+              <div class="menu-item" onclick="openSubPage(&#39;creator-center&#39;)">
+                <div class="menu-icon">🎨</div>
+                <div class="menu-text">创作者中心</div>
+                <div class="menu-badge">新</div>
+                <div class="menu-arrow">›</div>
+              </div>
+              <div class="menu-item" onclick="openSubPage(&#39;my-posts&#39;)">
+                <div class="menu-icon">📝</div>
+                <div class="menu-text">我的帖子</div>
+                <div class="menu-arrow">›</div>
+              </div>
+              <div class="menu-item" onclick="openSubPage(&#39;my-collections&#39;)">
+                <div class="menu-icon">⭐</div>
+                <div class="menu-text">我的收藏</div>
+                <div class="menu-arrow">›</div>
+              </div>
+            </div>
+
+            <div class="profile-section">👤 个人设置</div>
+            <div class="menu-section">
+              <div class="menu-item" onclick="openSubPage(&#39;profile-info&#39;)">
+                <div class="menu-icon">👤</div>
+                <div class="menu-text">个人信息</div>
+                <div class="menu-arrow">›</div>
+              </div>
+              <div class="menu-item" onclick="openSubPage(&#39;avatar&#39;)">
+                <div class="menu-icon">🎭</div>
+                <div class="menu-text">虚拟形象</div>
+                <div class="menu-arrow">›</div>
+              </div>
+              <div class="menu-item">
+                <div class="menu-icon">🎨</div>
+                <div class="menu-text">风格档案</div>
+                <div class="menu-arrow">›</div>
+              </div>
+            </div>
+
+            <div class="profile-section">🛍️ 购物与足迹</div>
+            <div class="menu-section">
+              <div class="menu-item" onclick="openSubPage(&#39;my-footprints&#39;)">
+                <div class="menu-icon">🗺️</div>
+                <div class="menu-text">我的足迹</div>
+                <div class="menu-arrow">›</div>
+              </div>
+              <div class="menu-item">
+                <div class="menu-icon">📦</div>
+                <div class="menu-text">我的订单</div>
+                <div class="menu-arrow">›</div>
+              </div>
+              <div class="menu-item" onclick="openSubPage(&#39;member-center&#39;)">
+                <div class="menu-icon">💳</div>
+                <div class="menu-text">会员中心</div>
+                <div class="menu-badge">钻石</div>
+                <div class="menu-arrow">›</div>
+              </div>
+            </div>
+
+            <div class="profile-section">⚙️ 设置与帮助</div>
+            <div class="menu-section">
+              <div class="menu-item">
+                <div class="menu-icon">🔔</div>
+                <div class="menu-text">消息通知</div>
+                <div class="menu-arrow">›</div>
+              </div>
+              <div class="menu-item" onclick="openSubPage(&#39;settings&#39;)">
+                <div class="menu-icon">⚙️</div>
+                <div class="menu-text">设置</div>
+                <div class="menu-arrow">›</div>
+              </div>
+              <div class="menu-item" onclick="openSubPage(&#39;customer-service&#39;)">
+                <div class="menu-icon">💬</div>
+                <div class="menu-text">客服帮助</div>
+                <div class="menu-arrow">›</div>
+              </div>
+              <div class="menu-item">
+                <div class="menu-icon">ℹ️</div>
+                <div class="menu-text">关于三福</div>
+                <div class="menu-arrow">›</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 底部导航栏 -->
+      <div class="taskbar">
+        <div class="taskbar-item active" data-page="page-home">
+          <div class="taskbar-icon">🎨</div>
+          <span class="taskbar-label">搭案空间</span>
+        </div>
+        <div class="taskbar-item" data-page="page-community">
+          <div class="taskbar-icon">🌐</div>
+          <span class="taskbar-label">搭搭桌面</span>
+        </div>
+        <div class="taskbar-item" data-page="page-member">
+          <div class="taskbar-icon">💳</div>
+          <span class="taskbar-label">会员码</span>
+        </div>
+        <div class="taskbar-item" data-page="page-store">
+          <div class="taskbar-icon">🛍️</div>
+          <span class="taskbar-label">逛福窗口</span>
+        </div>
+        <div class="taskbar-item" data-page="page-profile">
+          <div class="taskbar-icon">🎁</div>
+          <span class="taskbar-label">我的福盒</span>
+        </div>
+      </div>
+
+      <!-- ========== 二级页面容器 ========== -->
+      
+      <!-- 1. 个人信息页面 -->
+      <div class="sub-page" id="sub-profile-info">
+        <div class="back-btn" onclick="closeSubPage(&#39;sub-profile-info&#39;)">‹</div>
+        <div class="page-header">
+          <div class="page-title">👤 个人信息</div>
+        </div>
+        <div class="sub-page-content">
+          <div class="profile-card">
+            <div class="profile-edit-avatar">
+              <div class="edit-avatar-large">👤</div>
+              <div class="edit-avatar-info">
+                <div class="edit-avatar-name">潮流探索者</div>
+                <div class="edit-avatar-edit">点击更换头像 ›</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">昵称</label>
+              <input type="text" class="form-input" value="潮流探索者">
+            </div>
+            <div class="form-group">
+              <label class="form-label">生日</label>
+              <input type="date" class="form-input" value="2000-05-13">
+            </div>
+            <div class="form-group">
+              <label class="form-label">地区</label>
+              <input type="text" class="form-input" value="广东 广州">
+            </div>
+            <div class="form-group">
+              <label class="form-label">穿搭风格标签</label>
+              <div class="tag-group">
+                <span class="tag-chip selected">Y2K</span>
+                <span class="tag-chip selected">千禧辣妹</span>
+                <span class="tag-chip">Clean Fit</span>
+                <span class="tag-chip">街头风</span>
+                <span class="tag-chip selected">复古</span>
+                <span class="tag-chip">甜美</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">MBTI</label>
+              <input type="text" class="form-input" value="ENFP">
+            </div>
+            <div class="form-group">
+              <label class="form-label">个性签名</label>
+              <input type="text" class="form-input" value="今天也是元气满满的一天～">
+            </div>
+          </div>
+
+          <div class="level-card">
+            <div class="level-header">
+              <span class="level-name">我的等级</span>
+              <span class="level-value">Lv.5</span>
+            </div>
+            <div class="level-bar">
+              <div class="level-progress"></div>
+            </div>
+            <div class="level-info">再成长 350 经验值即可升级</div>
+          </div>
+
+          <div class="level-card" style="background: linear-gradient(180deg, var(--millennium-pink) 0%, var(--millennium-purple) 100%);">
+            <div class="level-header">
+              <span class="level-name">我的福气值</span>
+              <span class="level-value">2,888</span>
+            </div>
+            <div class="level-bar">
+              <div class="level-progress" style="width: 80%;"></div>
+            </div>
+            <div class="level-info">福气值可用于兑换限定周边</div>
+          </div>
+
+          <div class="profile-card">
+            <div class="section-title" style="margin-bottom: var(--space-md);">🏅 我的勋章</div>
+            <div class="badge-grid">
+              <div class="badge-item earned">
+                <div class="badge-icon">🎨</div>
+                <div class="badge-name">穿搭达人</div>
+              </div>
+              <div class="badge-item earned">
+                <div class="badge-icon">⭐</div>
+                <div class="badge-name">人气博主</div>
+              </div>
+              <div class="badge-item earned">
+                <div class="badge-icon">🛍️</div>
+                <div class="badge-name">购物达人</div>
+              </div>
+              <div class="badge-item">
+                <div class="badge-icon">🔒</div>
+                <div class="badge-name">签到王者</div>
+              </div>
+              <div class="badge-item earned">
+                <div class="badge-icon">💎</div>
+                <div class="badge-name">钻石会员</div>
+              </div>
+              <div class="badge-item">
+                <div class="badge-icon">🎯</div>
+                <div class="badge-name">任务达人</div>
+              </div>
+              <div class="badge-item">
+                <div class="badge-icon">🌟</div>
+                <div class="badge-name">潮流先锋</div>
+              </div>
+              <div class="badge-item">
+                <div class="badge-icon">🔒</div>
+                <div class="badge-name">隐藏成就</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="profile-card" style="text-align: center;">
+            <div class="section-title" style="justify-content: center; margin-bottom: var(--space-md);">🧬 风格 DNA 测试</div>
+            <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: var(--space-md);">
+              完成风格 DNA 测试，发现最适合你的穿搭风格
+            </p>
+            <button class="avatar-action-btn" style="margin: 0 auto;">
+              开始测试 ›
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. 虚拟形象页面 -->
+      <div class="sub-page" id="sub-avatar">
+        <div class="back-btn" onclick="closeSubPage(&#39;sub-avatar&#39;)">‹</div>
+        <div class="page-header">
+          <div class="page-title">🎭 虚拟形象</div>
+        </div>
+        <div class="sub-page-content">
+          <div class="avatar-stage">
+            <div class="avatar-display">
+              <div class="avatar-figure">
+                <div class="avatar-figure-head"></div>
+                <div class="avatar-figure-body"></div>
+                <div class="avatar-figure-legs">
+                  <div class="avatar-figure-leg"></div>
+                  <div class="avatar-figure-leg"></div>
+                </div>
+                <div class="avatar-clothes-top"></div>
+                <div class="avatar-clothes-bottom"></div>
+                <div class="avatar-clothes-shoes">
+                  <div class="avatar-shoe"></div>
+                  <div class="avatar-shoe"></div>
+                </div>
+              </div>
+            </div>
+            <div class="avatar-actions">
+              <button class="avatar-action-btn">📸 今日 OOTD</button>
+              <button class="avatar-action-btn">✨ AI 推荐</button>
+              <button class="avatar-action-btn">💾 保存搭配</button>
+            </div>
+          </div>
+
+          <div class="wardrobe-tabs">
+            <div class="wardrobe-tab active">👕 上装</div>
+            <div class="wardrobe-tab">👖 下装</div>
+            <div class="wardrobe-tab">👗 套装</div>
+            <div class="wardrobe-tab">👟 鞋袜</div>
+            <div class="wardrobe-tab">💍 饰品</div>
+            <div class="wardrobe-tab">💄 妆容</div>
+          </div>
+
+          <div class="wardrobe-grid">
+            <div class="wardrobe-card selected">
+              <div class="wardrobe-preview">👕</div>
+              <div class="wardrobe-name">短款 T 恤</div>
+            </div>
+            <div class="wardrobe-card">
+              <div class="wardrobe-preview">👚</div>
+              <div class="wardrobe-name">吊带背心</div>
+            </div>
+            <div class="wardrobe-card">
+              <div class="wardrobe-preview">🧥</div>
+              <div class="wardrobe-name">卫衣</div>
+            </div>
+            <div class="wardrobe-card">
+              <div class="wardrobe-preview">👔</div>
+              <div class="wardrobe-name">衬衫</div>
+            </div>
+            <div class="wardrobe-card">
+              <div class="wardrobe-preview">🧶</div>
+              <div class="wardrobe-name">针织衫</div>
+            </div>
+            <div class="wardrobe-card">
+              <div class="wardrobe-preview">👕</div>
+              <div class="wardrobe-name">长袖 T 恤</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. 我的帖子页面 -->
+      <div class="sub-page" id="sub-my-posts">
+        <div class="back-btn" onclick="closeSubPage(&#39;sub-my-posts&#39;)">‹</div>
+        <div class="page-header">
+          <div class="page-title">📝 我的帖子</div>
+        </div>
+        <div class="sub-page-content">
+          <div class="creator-stats">
+            <div class="creator-stat-card">
+              <div class="creator-stat-value">24</div>
+              <div class="creator-stat-label">已发布</div>
+            </div>
+            <div class="creator-stat-card">
+              <div class="creator-stat-value">3</div>
+              <div class="creator-stat-label">草稿箱</div>
+            </div>
+            <div class="creator-stat-card">
+              <div class="creator-stat-value">1.2w</div>
+              <div class="creator-stat-label">总浏览</div>
+            </div>
+          </div>
+
+          <div class="post-tabs">
+            <div class="post-tab active">全部</div>
+            <div class="post-tab">已发布</div>
+            <div class="post-tab">草稿</div>
+            <div class="post-tab">收藏夹</div>
+          </div>
+
+          <div class="post-list-item">
+            <div class="post-list-header">
+              <div class="post-list-thumb">👗</div>
+              <div class="post-list-info">
+                <div class="post-list-title">Y2K 千禧辣妹穿搭分享！</div>
+                <div class="post-list-meta">2026-05-10 · 穿搭</div>
+                <div class="post-list-stats">
+                  <span class="post-stat">❤️ 256</span>
+                  <span class="post-stat">💬 48</span>
+                  <span class="post-stat">👁️ 1,234</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="post-list-item">
+            <div class="post-list-header">
+              <div class="post-list-thumb">🛍️</div>
+              <div class="post-list-info">
+                <div class="post-list-title">三福新品开箱！这个配色太绝了</div>
+                <div class="post-list-meta">2026-05-08 · 好物</div>
+                <div class="post-list-stats">
+                  <span class="post-stat">❤️ 189</span>
+                  <span class="post-stat">💬 32</span>
+                  <span class="post-stat">👁️ 892</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="post-list-item">
+            <div class="post-list-header">
+              <div class="post-list-thumb">📸</div>
+              <div class="post-list-info">
+                <div class="post-list-title">Citywalk 穿搭记录</div>
+                <div class="post-list-meta">2026-05-05 · 日常</div>
+                <div class="post-list-stats">
+                  <span class="post-stat">❤️ 142</span>
+                  <span class="post-stat">💬 21</span>
+                  <span class="post-stat">👁️ 567</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. 我的收藏页面 -->
+      <div class="sub-page" id="sub-my-collections">
+        <div class="back-btn" onclick="closeSubPage(&#39;sub-my-collections&#39;)">‹</div>
+        <div class="page-header">
+          <div class="page-title">⭐ 我的收藏</div>
+        </div>
+        <div class="sub-page-content">
+          <div class="collection-mood-tags">
+            <span class="mood-tag">💖 心动</span>
+            <span class="mood-tag">🔥 必买</span>
+            <span class="mood-tag">💡 灵感</span>
+            <span class="mood-tag">🎯 待尝试</span>
+            <span class="mood-tag">💭 种草</span>
+          </div>
+
+          <div class="collection-tabs">
+            <div class="collection-tab active">全部</div>
+            <div class="collection-tab">穿搭</div>
+            <div class="collection-tab">好物</div>
+            <div class="collection-tab">灵感</div>
+            <div class="collection-tab">店铺</div>
+          </div>
+
+          <div class="collection-grid">
+            <div class="collection-card">
+              <div class="collection-image">👗</div>
+              <div class="collection-info">
+                <div class="collection-name">夏日 Y2K 穿搭灵感</div>
+                <div class="collection-date">2026-05-12</div>
+              </div>
+            </div>
+            <div class="collection-card">
+              <div class="collection-image">👜</div>
+              <div class="collection-info">
+                <div class="collection-name">三福新品包包</div>
+                <div class="collection-date">2026-05-11</div>
+              </div>
+            </div>
+            <div class="collection-card">
+              <div class="collection-image">👟</div>
+              <div class="collection-info">
+                <div class="collection-name">厚底玛丽珍鞋</div>
+                <div class="collection-date">2026-05-10</div>
+              </div>
+            </div>
+            <div class="collection-card">
+              <div class="collection-image">💄</div>
+              <div class="collection-info">
+                <div class="collection-name">彩妆系列</div>
+                <div class="collection-date">2026-05-09</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. 我的足迹页面 -->
+      <div class="sub-page" id="sub-my-footprints">
+        <div class="back-btn" onclick="closeSubPage(&#39;sub-my-footprints&#39;)">‹</div>
+        <div class="page-header">
+          <div class="page-title">🗺️ 我的足迹</div>
+        </div>
+        <div class="sub-page-content">
+          <div class="足迹-header">
+            <div class="足迹-stats">
+              <div class="足迹-stat">
+                <div class="足迹-stat-value">56</div>
+                <div class="足迹-stat-label">浏览记录</div>
+              </div>
+              <div class="足迹-stat">
+                <div class="足迹-stat-value">12</div>
+                <div class="足迹-stat-label">到店打卡</div>
+              </div>
+              <div class="足迹-stat">
+                <div class="足迹-stat-value">8</div>
+                <div class="足迹-stat-label">城市足迹</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-date">2026-05-12</div>
+              <div class="timeline-content">
+                <div class="timeline-title">📍 三福·广州天河城店</div>
+                <div class="timeline-desc">到店打卡 · 试穿 Y2K 系列新品</div>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-date">2026-05-10</div>
+              <div class="timeline-content">
+                <div class="timeline-title">👗 浏览了「千禧辣妹短上衣」</div>
+                <div class="timeline-desc">商品页面 · 收藏</div>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-date">2026-05-08</div>
+              <div class="timeline-content">
+                <div class="timeline-title">📸 发布了穿搭帖子</div>
+                <div class="timeline-desc">Y2K 千禧辣妹穿搭分享！</div>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-date">2026-05-05</div>
+              <div class="timeline-content">
+                <div class="timeline-title">🏙️ Citywalk 穿搭记录</div>
+                <div class="timeline-desc">广州·太古汇</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6. 会员中心页面 -->
+      <div class="sub-page" id="sub-member-center">
+        <div class="back-btn" onclick="closeSubPage(&#39;sub-member-center&#39;)">‹</div>
+        <div class="page-header">
+          <div class="page-title">💳 会员中心</div>
+        </div>
+        <div class="sub-page-content">
+          <div class="member-vip-card">
+            <div class="member-vip-header">
+              <span class="member-vip-level">钻石会员</span>
+              <span class="member-vip-badge">Lv.5</span>
+            </div>
+            <div class="member-vip-points">
+              <div class="points-number">2,888</div>
+              <div class="points-label">我的积分</div>
+            </div>
+            <div class="member-vip-progress">
+              <div class="progress-bar">
+                <div class="progress-fill"></div>
+              </div>
+              <div class="progress-text">再成长 1,112 积分即可升级至黑钻会员</div>
+            </div>
+          </div>
+
+          <div class="daily-checkin">
+            <div class="checkin-info">
+              <div class="checkin-title">📅 每日签到</div>
+              <div class="checkin-desc">连续签到 7 天，领取限定徽章</div>
+            </div>
+            <button class="checkin-btn">立即签到</button>
+          </div>
+
+          <div class="benefits-grid">
+            <div class="benefit-card">
+              <div class="benefit-icon">🎂</div>
+              <div class="benefit-name">生日双倍积分</div>
+            </div>
+            <div class="benefit-card">
+              <div class="benefit-icon">🛍️</div>
+              <div class="benefit-name">新品 9 折</div>
+            </div>
+            <div class="benefit-card">
+              <div class="benefit-icon">☕</div>
+              <div class="benefit-name">免费饮品券</div>
+            </div>
+            <div class="benefit-card">
+              <div class="benefit-icon">🎫</div>
+              <div class="benefit-name">活动优先</div>
+            </div>
+          </div>
+
+          <div class="profile-card">
+            <div class="section-title">🎮 潮流任务系统</div>
+            <div class="post-list-item" style="margin-bottom: var(--space-xs);">
+              <div class="post-list-header">
+                <div class="post-list-thumb">✨</div>
+                <div class="post-list-info">
+                  <div class="post-list-title">发布穿搭帖子</div>
+                  <div class="post-list-meta">奖励：100 福气值</div>
+                </div>
+              </div>
+            </div>
+            <div class="post-list-item">
+              <div class="post-list-header">
+                <div class="post-list-thumb">🛍️</div>
+                <div class="post-list-info">
+                  <div class="post-list-title">到店打卡</div>
+                  <div class="post-list-meta">奖励：50 福气值 + 限定徽章</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 7. 设置页面 (三级) -->
+      <div class="sub-page" id="sub-settings">
+        <div class="back-btn" onclick="closeSubPage(&#39;sub-settings&#39;)">‹</div>
+        <div class="page-header">
+          <div class="page-title">⚙️ 设置</div>
+        </div>
+        <div class="sub-page-content">
+          <div class="settings-section">
+            <div class="settings-title">账号与安全</div>
+            <div class="toggle-item">
+              <div class="toggle-info">
+                <div class="toggle-label">账号安全</div>
+                <div class="toggle-desc">密码、手机号、第三方绑定</div>
+              </div>
+              <div class="menu-arrow">›</div>
+            </div>
+            <div class="toggle-item">
+              <div class="toggle-info">
+                <div class="toggle-label">隐私设置</div>
+                <div class="toggle-desc">谁可以看我的内容和动态</div>
+              </div>
+              <div class="menu-arrow">›</div>
+            </div>
+          </div>
+
+          <div class="settings-section">
+            <div class="settings-title">通知设置</div>
+            <div class="toggle-item">
+              <div class="toggle-info">
+                <div class="toggle-label">推送通知</div>
+                <div class="toggle-desc">接收重要通知和更新</div>
+              </div>
+              <div class="toggle-switch on" onclick="this.classList.toggle(&#39;on&#39;)"></div>
+            </div>
+            <div class="toggle-item">
+              <div class="toggle-info">
+                <div class="toggle-label">点赞和评论</div>
+                <div class="toggle-desc">有人互动时通知</div>
+              </div>
+              <div class="toggle-switch on" onclick="this.classList.toggle(&#39;on&#39;)"></div>
+            </div>
+          </div>
+
+          <div class="settings-section">
+            <div class="settings-title">个性化</div>
+            <div class="toggle-item">
+              <div class="toggle-info">
+                <div class="toggle-label">AI 偏好</div>
+                <div class="toggle-desc">AI 穿搭推荐风格偏好</div>
+              </div>
+              <div class="menu-arrow">›</div>
+            </div>
+            <div class="toggle-item">
+              <div class="toggle-info">
+                <div class="toggle-label">主题</div>
+                <div class="toggle-desc">浅色 / 深色模式</div>
+              </div>
+              <div class="menu-arrow">›</div>
+            </div>
+            <div class="toggle-item">
+              <div class="toggle-info">
+                <div class="toggle-label">字体与动态效果</div>
+                <div class="toggle-desc">调整字体大小和动画</div>
+              </div>
+              <div class="menu-arrow">›</div>
+            </div>
+          </div>
+
+          <div class="settings-section">
+            <div class="settings-title">其他</div>
+            <div class="toggle-item">
+              <div class="toggle-info">
+                <div class="toggle-label">青少年模式</div>
+                <div class="toggle-desc">开启后限制部分内容</div>
+              </div>
+              <div class="toggle-switch" onclick="this.classList.toggle(&#39;on&#39;)"></div>
+            </div>
+            <div class="toggle-item">
+              <div class="toggle-info">
+                <div class="toggle-label">清除缓存</div>
+                <div class="toggle-desc">当前缓存：128MB</div>
+              </div>
+              <div class="menu-arrow">›</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 8. 客服帮助页面 (三级) -->
+      <div class="sub-page" id="sub-customer-service">
+        <div class="back-btn" onclick="closeSubPage(&#39;sub-customer-service&#39;)">‹</div>
+        <div class="page-header">
+          <div class="page-title">💬 客服帮助</div>
+        </div>
+        <div class="sub-page-content">
+          <div class="chat-container">
+            <div class="chat-messages">
+              <div class="chat-message ai">
+                <div class="chat-avatar">🤖</div>
+                <div class="chat-bubble">你好呀！我是三福 AI 客服小福～ 有什么可以帮你的吗？(◕‿◕)</div>
+              </div>
+              <div class="chat-message user">
+                <div class="chat-avatar">👤</div>
+                <div class="chat-bubble">我想了解一下退换货政策</div>
+              </div>
+              <div class="chat-message ai">
+                <div class="chat-avatar">🤖</div>
+                <div class="chat-bubble">好的！三福支持 7 天无理由退换货哦～ 商品需保持吊牌完整、未洗涤未穿着。你可以在「我的订单」中申请退换货，我会全程协助你！(◍•ᴗ•◍)</div>
+              </div>
+            </div>
+            <div class="chat-input-area">
+              <input type="text" class="chat-input" placeholder="输入你的问题...">
+              <button class="chat-send">发送</button>
+            </div>
+          </div>
+
+          <div class="help-grid">
+            <div class="help-card">
+              <div class="help-icon">📦</div>
+              <div class="help-name">订单问题</div>
+            </div>
+            <div class="help-card">
+              <div class="help-icon">🔄</div>
+              <div class="help-name">退换货</div>
+            </div>
+            <div class="help-card">
+              <div class="help-icon">👗</div>
+              <div class="help-name">穿搭建议</div>
+            </div>
+            <div class="help-card">
+              <div class="help-icon">⚠️</div>
+              <div class="help-name">社区举报</div>
+            </div>
+          </div>
+
+          <div class="profile-card" style="margin-top: var(--space-md);">
+            <div class="section-title">❓ 常见问题</div>
+            <div class="post-list-item" style="margin-bottom: var(--space-xs);">
+              <div class="post-list-title">如何成为会员？</div>
+            </div>
+            <div class="post-list-item" style="margin-bottom: var(--space-xs);">
+              <div class="post-list-title">积分如何使用？</div>
+            </div>
+            <div class="post-list-item">
+              <div class="post-list-title">如何参与穿搭大赛？</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 9. 会员码页面 (四级) -->
+      <div class="sub-page" id="sub-member-code">
+        <div class="back-btn" onclick="closeSubPage(&#39;sub-member-code&#39;)">‹</div>
+        <div class="page-header">
+          <div class="page-title">💳 会员码</div>
+        </div>
+        <div class="sub-page-content">
+          <div class="member-code-card">
+            <div class="code-header">
+              <div class="code-level">✨ 钻石会员</div>
+              <div class="code-points">2,888 积分</div>
+            </div>
+            <div class="qr-display">📱</div>
+            <div class="code-footer">向店员出示此码享受会员福利</div>
+          </div>
+
+          <div class="profile-card">
+            <div class="section-title">🎁 今日福利</div>
+            <div class="benefits-grid" style="margin-top: var(--space-md);">
+              <div class="benefit-card">
+                <div class="benefit-icon">🎂</div>
+                <div class="benefit-name">生日双倍积分</div>
+              </div>
+              <div class="benefit-card">
+                <div class="benefit-icon">🛍️</div>
+                <div class="benefit-name">新品 9 折</div>
+              </div>
+              <div class="benefit-card">
+                <div class="benefit-icon">☕</div>
+                <div class="benefit-name">免费饮品券</div>
+              </div>
+              <div class="benefit-card">
+                <div class="benefit-icon">🎫</div>
+                <div class="benefit-name">活动优先</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 10. 创作者中心页面 (三级) -->
+      <div class="sub-page" id="sub-creator-center">
+        <div class="back-btn" onclick="closeSubPage(&#39;sub-creator-center&#39;)">‹</div>
+        <div class="page-header">
+          <div class="page-title">🎨 创作者中心</div>
+        </div>
+        <div class="sub-page-content">
+          <div class="creator-overview">
+            <div class="creator-header">
+              <div class="creator-avatar">👤</div>
+              <div class="creator-info">
+                <div class="creator-name">潮流探索者</div>
+                <div class="creator-level">Lv.3 创作者 · 粉丝 1,234</div>
+              </div>
+            </div>
+            <div class="data-grid">
+              <div class="data-card">
+                <div class="data-value">24</div>
+                <div class="data-label">作品数</div>
+              </div>
+              <div class="data-card">
+                <div class="data-value">1.2w</div>
+                <div class="data-label">总浏览</div>
+              </div>
+              <div class="data-card">
+                <div class="data-value">3,456</div>
+                <div class="data-label">总点赞</div>
+              </div>
+              <div class="data-card">
+                <div class="data-value">1,234</div>
+                <div class="data-label">粉丝数</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="trend-chart">
+            <div class="chart-title">📈 近 7 日数据趋势</div>
+            <div class="chart-placeholder">📊</div>
+          </div>
+
+          <div class="profile-card">
+            <div class="section-title">🛠️ 创作工具</div>
+            <div class="tool-grid" style="margin-top: var(--space-md);">
+              <div class="tool-card">
+                <div class="tool-icon">🤖</div>
+                <div class="tool-name">AI 选题助手</div>
+                <div class="tool-desc">根据热点推荐创作方向</div>
+              </div>
+              <div class="tool-card">
+                <div class="tool-icon">🔥</div>
+                <div class="tool-name">今日热点</div>
+                <div class="tool-desc">实时追踪潮流趋势</div>
+              </div>
+              <div class="tool-card">
+                <div class="tool-icon">📊</div>
+                <div class="tool-name">穿搭趋势榜</div>
+                <div class="tool-desc">热门风格与单品分析</div>
+              </div>
+              <div class="tool-card">
+                <div class="tool-icon">💰</div>
+                <div class="tool-name">商单中心</div>
+                <div class="tool-desc">品牌合作机会</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="profile-card">
+            <div class="section-title">📋 帖子管理</div>
+            <div class="post-list-item" style="margin-bottom: var(--space-xs);">
+              <div class="post-list-header">
+                <div class="post-list-thumb">👗</div>
+                <div class="post-list-info">
+                  <div class="post-list-title">Y2K 千禧辣妹穿搭分享！</div>
+                  <div class="post-list-meta">❤️ 256 · 💬 48 · 👁️ 1,234</div>
+                </div>
+              </div>
+            </div>
+            <div class="post-list-item">
+              <div class="post-list-header">
+                <div class="post-list-thumb">🛍️</div>
+                <div class="post-list-info">
+                  <div class="post-list-title">三福新品开箱！</div>
+                  <div class="post-list-meta">❤️ 189 · 💬 32 · 👁️ 892</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    // 更新时间
+    function updateTime() {
+      const now = new Date();
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      document.getElementById('currentTime').textContent = `${hours}:${minutes}`;
+    }
+    updateTime();
+    setInterval(updateTime, 1000);
+
+    // 打开二级页面
+    function openSubPage(pageId) {
+      const subPage = document.getElementById('sub-' + pageId);
+      if (subPage) {
+        subPage.classList.add('active');
+      }
+    }
+
+    // 关闭二级页面
+    function closeSubPage(subPageId) {
+      const subPage = document.getElementById(subPageId);
+      if (subPage) {
+        subPage.classList.remove('active');
+      }
+    }
+
+    // 底部导航切换
+    document.querySelectorAll('.taskbar-item').forEach(item => {
+      item.addEventListener('click', function() {
+        document.querySelectorAll('.taskbar-item').forEach(i => i.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+
+    // 标签选择
+    document.querySelectorAll('.tag-chip').forEach(chip => {
+      chip.addEventListener('click', function() {
+        this.classList.toggle('selected');
+      });
+    });
+
+    //  wardrobe 卡片选择
+    document.querySelectorAll('.wardrobe-card').forEach(card => {
+      card.addEventListener('click', function() {
+        document.querySelectorAll('.wardrobe-card').forEach(c => c.classList.remove('selected'));
+        this.classList.add('selected');
+      });
+    });
+  </script>
+
+
+</body></html>
